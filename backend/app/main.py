@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from routers.auth_router import auth_router
-from routers.pdf_router import pdf_router
-from routers.chat_router import chat_router
+from .routers.auth_router import auth_router
+from .routers.pdf_router import pdf_router
+from .routers.chat_router import chat_router
 
 app = FastAPI(
     title="PDF Intel App Backend",
