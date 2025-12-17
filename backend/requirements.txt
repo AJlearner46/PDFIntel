@@ -13,3 +13,5 @@ chromadb
 sentence-transformers
 pdfplumber
 python-multipart
+pypdf
+langchain-text_splitters
