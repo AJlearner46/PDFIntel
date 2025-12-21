@@ -14,4 +14,5 @@ sentence-transformers
 pdfplumber
 python-multipart
 pypdf
-langchain-text_splitters
+langchain-text-splitters
+jose 

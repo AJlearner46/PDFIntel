@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi.security import OAuth2PasswordRequestForm
 from datetime import datetime
 from pymongo.errors import ServerSelectionTimeoutError, ConnectionFailure
 from app.models.user_model import UserCreate
@@ -48,21 +49,24 @@ async def register(user: UserCreate):
 
 
 @auth_router.post("/login")
-async def login(user: UserCreate):
+async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     await check_mongodb_connection()
     
-    db_user = await users_collection.find_one({"email": user.email})
+    db_user = await users_collection.find_one({"email": form_data.username})
     if not db_user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid credentials"
         )
 
-    if not verify_password(user.password, db_user["hashed_password"]):
+    if not verify_password(form_data.password, db_user["hashed_password"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid credentials"
         )
 
     token = create_access_token(str(db_user["_id"]))
-    return {"access_token": token, "token_type": "bearer"}
+    return {
+        "access_token": token,
+        "token_type": "bearer"
+    }

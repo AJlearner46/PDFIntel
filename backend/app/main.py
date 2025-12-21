@@ -23,7 +23,6 @@ app.include_router(chat_router, prefix="/chat", tags=["Chat"])
 async def startup_event():
     """Verify MongoDB connection on startup"""
     try:
-        # Ping the database to check connection
         await client.admin.command("ping")
         logger.info(f"✓ Successfully connected to MongoDB at {MONGO_URI}")
     except Exception as e:
