@@ -16,7 +16,9 @@ app = FastAPI(
 
 app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(pdf_router, prefix="/pdf", tags=["PDF"])
+# app.include_router(chat_router, prefix="/chat", tags=["Chat"])
 app.include_router(chat_router, prefix="/chat", tags=["Chat"])
+
 
 
 @app.on_event("startup")
